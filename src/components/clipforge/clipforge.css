@@ -1,0 +1,24 @@
+/* Pipeline. Static by default: no playhead, no counter, every index in ink.
+   The motion branch adds .cf-on to the pipeline root and sets data-state per stage. */
+.cf-head,
+.cf-live {
+  display: none;
+}
+.cf-on .cf-head,
+.cf-on .cf-live {
+  display: block;
+}
+.cf-idx {
+  transition: color 0.3s var(--ease-out-soft);
+}
+.cf-on [data-state="ahead"] .cf-idx {
+  color: var(--color-muted);
+}
+.cf-on [data-state="current"] .cf-idx {
+  color: var(--color-accent);
+}
+
+/* Reframe diagram: zoom is an SVG transform on an inner <g>, so these hold 1px at any scale. */
+.cf-art * {
+  vector-effect: non-scaling-stroke;
+}

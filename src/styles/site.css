@@ -1,0 +1,21 @@
+@layer components {
+  /* 44px tap target around a .link; the underline stays on the text, not the box. */
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .tap:hover .link,
+  .tap:focus-visible .link {
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
+
+  /* SplitText line masks: room above and below so tight leading does not clip
+     glyph tops; the negative margin keeps the line box where it was. */
+  .split-line-mask {
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+}

@@ -1,0 +1,163 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk/wght.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+/* Design tokens. One warm ink, one paper, one accent. Contrast checked:
+   ink/paper 15:1, muted/paper 5:1, accent/paper 4.8:1 (and 6:1+ in .room). */
+@theme {
+  --color-paper: #f2efe9;
+  --color-ink: #1b1916;
+  --color-muted: #6b665e;
+  --color-accent: #c2360c;
+  --color-line: rgb(27 25 22 / 0.14);
+
+  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  /* One type scale, each step at least 1.3x the next. Nothing below 13px.
+     hero: the h1 only. display: the case-study h2. title: section h2s.
+     h3 and h4: every h3 and h4 on the page. No other heading sizes. */
+  --text-meta: 0.8125rem; /* 13px: labels and metadata only */
+  --text-hero: clamp(3.25rem, 15.5vw, 14.5rem);
+  --text-display: clamp(2.75rem, 1.2rem + 6.4vw, 7rem);
+  --text-title: clamp(2rem, 1.2rem + 3.2vw, 4rem);
+  --text-h3: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  --text-h4: 1.375rem;
+  --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The case study is the one inverted block on the page. Re-pointing the same
+   tokens means every utility (bg-paper, text-ink, border-line…) just works. */
+.room {
+  --color-paper: #171512;
+  --color-ink: #ede9e1;
+  --color-muted: #a39d92;
+  --color-accent: #ff6a3d;
+  --color-line: rgb(237 233 225 / 0.16);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  /* Display type is medium, never bold: size does the work. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+  h4 {
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+  /* Anchor targets clear the sticky nav (sticky from 768px up). */
+  @media (min-width: 768px) {
+    [id] {
+      scroll-margin-top: 72px;
+    }
+  }
+}
+
+@layer components {
+  /* Page gutter: 80px desktop, 24px mobile, 1280 content width. */
+  .wrap {
+    width: 100%;
+    max-width: calc(1280px + 2 * 80px);
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  @media (min-width: 1024px) {
+    .wrap {
+      padding-inline: 80px;
+    }
+  }
+
+  /* Metadata voice: mono, 13px, sentence case, never tracked capitals. */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The one link style: a resting hairline, and an ink underline that draws
+     in from the left on hover. */
+  .link {
+    background:
+      linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px,
+      linear-gradient(var(--color-line), var(--color-line)) no-repeat 0 100% / 100% 1px;
+    padding-bottom: 2px;
+    transition: background-size 0.35s var(--ease-out-soft);
+  }
+  .link:hover,
+  .link:focus-visible {
+    background-size:
+      100% 1px,
+      100% 1px;
+  }
+
+  /* The one button shape: sharp, solid ink. Hover steps the fill and lifts
+     1px; click presses it. .btn-ghost is the unselected state of a toggle. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1px solid var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 500;
+    transition:
+      transform 0.2s var(--ease-out-soft),
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .btn:hover {
+    background: color-mix(in oklab, var(--color-ink) 86%, var(--color-paper));
+    transform: translateY(-1px);
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--color-ink) 8%, transparent);
+    border-color: var(--color-ink);
+  }
+}
