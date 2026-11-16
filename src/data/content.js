@@ -223,7 +223,7 @@ export const projects = [
 
 export const education = [
   {
-    period: "2023 – present",
+    period: "2024 – present",
     title: "Software Engineering",
     place: "Metropolia University of Applied Sciences",
     text: "Coursework across object-oriented design in Java, web development, databases, CI and testing, machine learning, neural networks, and Rust with WebAssembly.",
