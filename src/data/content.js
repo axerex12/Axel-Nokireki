@@ -231,7 +231,7 @@ export const experience = [
   },
   {
     period: "2021 – 2024",
-    title: "Caretaker",
+    title: "Caretaker / Vahtimestari",
     place: "Omnia / Seure Henkilöstöpalvelut Oy",
     text: "Started during civil service and continued on call through Seure: access control, key logistics, security and daily customer service.",
   },
