@@ -11,7 +11,7 @@ export default function Contact() {
   return (
     <footer id="contact" className="wrap pt-24 lg:pt-[120px]">
       <h2 className="max-w-[24ch] text-title">
-        Contact. <span className="text-muted">The fastest way to reach me is GitHub.</span>
+        Contact. <span className="text-muted">Email, LinkedIn or GitHub.</span>
       </h2>
 
       <a href={github} className="tap mt-8 text-title leading-none tracking-[-0.03em] lg:mt-12">

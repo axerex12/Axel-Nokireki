@@ -17,8 +17,8 @@ export const profile = {
   links: {
     github: "https://github.com/axerex12",
     // Empty values are not rendered. Fill these in to show them.
-    email: "",
-    linkedin: "",
+    email: "axel.aaldijk12@gmail.com",
+    linkedin: "https://www.linkedin.com/in/axel-nokireki-92b827294",
   },
 };
 
