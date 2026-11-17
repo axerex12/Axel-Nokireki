@@ -1,26 +1,34 @@
-import { education, skills } from "../data/content.js";
+import { experience, education, skills } from "../data/content.js";
 
 export default function Cv() {
   return (
     <section id="cv" className="wrap pt-24 pb-12 lg:pt-[120px] lg:pb-[72px]">
       <h2 className="max-w-[24ch] text-title">
-        CV. <span className="text-muted">Education first, then each tool with the project it was used in.</span>
+        CV. <span className="text-muted">Work and education, then each tool with the project it was used in.</span>
       </h2>
 
-      <div className="mt-8 grid gap-y-4 border-t border-line pt-6 lg:mt-12 lg:grid-cols-12 lg:gap-x-6">
-        <p className="meta lg:col-span-4">Education</p>
-        <ul className="grid gap-y-8 lg:col-span-8 lg:col-start-5">
-          {education.map((e) => (
-            <li key={e.title}>
-              <h3 className="text-h3">{e.title}</h3>
-              <p className="meta mt-2">
-                {e.place} · {e.period}
-              </p>
-              <p className="mt-4 max-w-[62ch]">{e.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {[
+        ["Experience", experience],
+        ["Education", education],
+      ].map(([label, entries], i) => (
+        <div
+          key={label}
+          className={`grid gap-y-4 border-t border-line pt-6 lg:grid-cols-12 lg:gap-x-6 ${i ? "mt-16" : "mt-8 lg:mt-12"}`}
+        >
+          <p className="meta lg:col-span-4">{label}</p>
+          <ul className="grid gap-y-10 lg:col-span-8 lg:col-start-5">
+            {entries.map((e) => (
+              <li key={e.title}>
+                <h3 className="text-h3">{e.title}</h3>
+                <p className="meta mt-2">
+                  {e.place} · <span className="whitespace-nowrap">{e.period}</span>
+                </p>
+                {e.text && <p className="mt-4 max-w-[62ch]">{e.text}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
 
       <div className="mt-16 grid gap-y-4 border-t border-line pt-6 lg:grid-cols-12 lg:gap-x-6">
         <p className="meta lg:col-span-4">Skills</p>

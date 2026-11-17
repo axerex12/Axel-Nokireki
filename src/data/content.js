@@ -221,12 +221,38 @@ export const projects = [
   },
 ];
 
+// From the 2026 CV. Newest first; text is optional.
+export const experience = [
+  {
+    period: "2024 · 2 months",
+    title: "IT support intern",
+    place: "Omnia, Espoo",
+    text: "Set up Windows workstations, managed hardware and administered user accounts in Active Directory and Microsoft 365. Resolved on-site support tickets across classrooms and offices, including hardware and network faults.",
+  },
+  {
+    period: "2021 – 2024",
+    title: "Caretaker",
+    place: "Omnia / Seure Henkilöstöpalvelut Oy",
+    text: "Started during civil service and continued on call through Seure: access control, key logistics, security and daily customer service.",
+  },
+];
+
 export const education = [
   {
     period: "2024 – present",
-    title: "Software Engineering",
+    title: "Bachelor of Engineering, ICT",
     place: "Metropolia University of Applied Sciences",
-    text: "Coursework across object-oriented design in Java, web development, databases, CI and testing, machine learning, neural networks, and Rust with WebAssembly.",
+    text: "Software engineering major. Top grade, 5 of 5, in both software engineering project courses. Coursework across object-oriented design in Java, web development, databases, CI and testing, machine learning, neural networks, and Rust with WebAssembly.",
+  },
+  {
+    period: "2023 – 2024",
+    title: "Vocational qualification in ICT, IT support specialist",
+    place: "Omnia",
+  },
+  {
+    period: "2019 – 2021",
+    title: "Vocational qualification in ICT, game programming",
+    place: "Taitotalo",
   },
 ];
 
