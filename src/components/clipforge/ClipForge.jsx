@@ -1,10 +1,40 @@
+import { useRef, useState } from "react";
 import { clipforge as cf } from "../../data/content.js";
 import Pipeline from "./Pipeline.jsx";
 import Reframe from "./Reframe.jsx";
 import { nb } from "./text.js";
 import "./clipforge.css";
 
+// The deep dive (pipeline, reframing, details, stack) starts collapsed so the other
+// projects are one short scroll away. It mounts only when open, so the pipeline's
+// ScrollTriggers measure the real layout.
 export default function ClipForge() {
+  const [open, setOpen] = useState(false);
+  const bar = useRef(null);
+
+  // A render helper, not a component, so React keeps the same button and its focus.
+  const toggle = (fromBottom) => (
+    <button
+      type="button"
+      aria-expanded={open}
+      aria-controls="cf-more"
+      className="btn btn-ghost"
+      onClick={() => {
+        setOpen(!open);
+        // Closing from the bottom would strand the reader far down the page.
+        if (fromBottom) {
+          bar.current.scrollIntoView({ block: "center" });
+          bar.current.querySelector("button").focus({ preventScroll: true });
+        }
+      }}
+    >
+      {open ? "Hide the full case study" : "Show the full case study"}
+      <span aria-hidden="true" className="font-mono">
+        {open ? "−" : "+"}
+      </span>
+    </button>
+  );
+
   return (
     <section id="clipforge" className="room">
       <div className="wrap pt-24 pb-12 lg:pt-[120px] lg:pb-[72px]">
@@ -26,33 +56,55 @@ export default function ClipForge() {
           </dl>
         </div>
 
-        <Pipeline stages={cf.stages} />
-        <Reframe layouts={cf.layouts} />
-
-        <div className="mt-16 lg:mt-24 lg:grid lg:grid-cols-12 lg:gap-x-6">
-          <h3 className="text-h3 lg:col-span-4">
-            Details. <span className="text-muted">Six decisions that make it work.</span>
-          </h3>
-          <ul className="mt-8 grid gap-x-6 border-b border-line md:grid-cols-2 lg:col-span-8 lg:mt-0">
-            {cf.highlights.map((h) => (
-              <li key={h.title} className="border-t border-line py-8">
-                <p className="font-mono text-h3 leading-none whitespace-nowrap text-accent tabular-nums">{nb(h.figure)}</p>
-                <h4 className="mt-6 text-h4">{h.title}</h4>
-                <p className="mt-2 max-w-[62ch] leading-[1.65]">{nb(h.text)}</p>
-              </li>
-            ))}
-          </ul>
+        <div
+          ref={bar}
+          className="mt-12 grid gap-x-6 gap-y-4 border-t border-line pt-6 lg:mt-16 lg:grid-cols-12 lg:items-center"
+        >
+          <p className="meta lg:col-span-4">
+            {cf.stages.length} stages, {cf.layouts.length} layouts, {cf.highlights.length} details
+          </p>
+          <div className="lg:col-span-8">{toggle(false)}</div>
         </div>
 
-        <div className="mt-16 grid gap-x-6 gap-y-3 border-y border-line py-6 lg:mt-24 lg:grid-cols-12 lg:items-baseline">
-          <p id="cf-stack" className="meta lg:col-span-4">
-            Built with
-          </p>
-          <ul aria-labelledby="cf-stack" className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[14px] lg:col-span-8">
-            {cf.stack.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
+        <div id="cf-more">
+          {open && (
+            <>
+              <Pipeline stages={cf.stages} />
+              <Reframe layouts={cf.layouts} />
+
+              <div className="mt-16 lg:mt-24 lg:grid lg:grid-cols-12 lg:gap-x-6">
+                <h3 className="text-h3 lg:col-span-4">
+                  Details. <span className="text-muted">Six decisions that make it work.</span>
+                </h3>
+                <ul className="mt-8 grid gap-x-6 border-b border-line md:grid-cols-2 lg:col-span-8 lg:mt-0">
+                  {cf.highlights.map((h) => (
+                    <li key={h.title} className="border-t border-line py-8">
+                      <p className="font-mono text-h3 leading-none whitespace-nowrap text-accent tabular-nums">
+                        {nb(h.figure)}
+                      </p>
+                      <h4 className="mt-6 text-h4">{h.title}</h4>
+                      <p className="mt-2 max-w-[62ch] leading-[1.65]">{nb(h.text)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-16 grid gap-x-6 gap-y-3 border-y border-line py-6 lg:mt-24 lg:grid-cols-12 lg:items-baseline">
+                <p id="cf-stack" className="meta lg:col-span-4">
+                  Built with
+                </p>
+                <ul aria-labelledby="cf-stack" className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[14px] lg:col-span-8">
+                  {cf.stack.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-12 lg:mt-16 lg:grid lg:grid-cols-12 lg:gap-x-6">
+                <div className="lg:col-span-8 lg:col-start-5">{toggle(true)}</div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
